@@ -1,7 +1,9 @@
-# A simple app that lets you search through guthub's users and get more details about the user. 
+# Github user search app 
 
-## directory
-``bash
+A simple app that lets you search through guthub's users and get more details about the user.
+
+# Project directory
+```bash
 src
  ┣ components
  ┃ ┣ navs
@@ -27,7 +29,7 @@ src
  ┣ reportWebVitals.js
  ┗ setupTests.js
 ```
-## how to run the project
+# Setup
 
 In the project directory, you can run:
 
@@ -36,15 +38,22 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Posible improvement consideration
+# Posible improvement consideration
 The can be further improved upeon giving more then interms of user experienc, design and architechture over all.
 
 for example, the app can benefit from a better user experience, `by not using the standard method of searching by clicking a search button`, but introducing the concept of `debouncing`, which is a way of improving performance.
 
 Another consideration, is by replacing prop drilling pattern used in the app by using state management like `redux/toolkit`.
 
-This project was built with [Create React App](https://github.com/facebook/create-react-app).
+# Technologies used
+* React
+* React-router-dom
+* Bootstrap
+* fetch
+* Javascript
+
+# Demo
 
 
-## please note:
+# please note:
  that this project requires environment variable containing the access_token to run.
