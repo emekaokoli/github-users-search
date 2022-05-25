@@ -62,12 +62,13 @@ function App() {
 
   const handleNext = () => {
     if (!nextpage) throw new Error('No next page');
-    const question = nextpage.split('?')[1];
-    const and = question.split('&');
+    const questionMark = nextpage.split('?')[1];
+    const and = questionMark.split('&');
     const query = and[0].split('=')[1];
     const currentPage = and[3].split('=')[1];
     const perpage = and[4].split('=')[1];
     console.log(query, currentPage, perpage);
+    setPage(currentPage);
     getUsers(query, currentPage, perpage);
   }
 
@@ -101,6 +102,7 @@ function App() {
           path='/'
           element={
             <Home
+              page={page}
               input={input}
               users={users}
               disabled={disabled}
@@ -115,6 +117,7 @@ function App() {
           path='/search'
           element={
             <SearchUsers
+              page={page}
               input={input}
               users={users}
               disabled={disabled}

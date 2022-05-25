@@ -7,7 +7,7 @@ const UserDetails = () => {
   const { username } = useParams();
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +38,10 @@ const UserDetails = () => {
     public_repos,
     email,
     created_at,
-    name
+    name,
   } = userDetails;
+
+  console.log(userDetails);
 
   if (loading) {
     return <div className='loading'>loading...</div>;
@@ -48,31 +50,59 @@ const UserDetails = () => {
     return <div className='error'>{error}</div>;
   }
   return (
-    <main className='user-details' key={id}>
-      <div className='user-info'>
-        <img src={avatar_url} alt={login} />
-        <div className='user-details'>
-          <h2 className='username'>{name}</h2>
-          <p className='bio-description'>User Bio{bio}</p>
-          <p className='bio-details'>Location: {location}</p>
-          <p className='bio-details'>Company: {company}</p>
-          <p className='bio-details'>Blog: {blog}</p>
-          <p className='bio-details'>Email: {email}</p>
-          <p className='bio-details'>Public Repo: {public_repos}</p>
-          <p className='bio-details'>Public Repo: {public_gists}</p>
-          <p className='bio-details'>Followers {followers}</p>
-          <p className='bio-details'>Following {following}</p>
-          <p className='bio-details'>
-            Date joined:{' '}
-            {new Date(created_at).toLocaleDateString('en-US')}
-          </p>
+    <div className='user-details-container' key={id}>
+      {userDetails.message === 'Not Found' ? (
+        <div className='link-container'>
+          <h1>User not found {error}</h1>
+          <Link to='/' className='link'>
+            Go back to home
+          </Link>
         </div>
-      </div>
-     <div className='link-container'>
-        <Link to='/' className='link'>Back to Search</Link>
-     </div>
-    </main>
+      ) : (
+        <>
+          <div className='user-details'>
+            <img src={avatar_url} alt={login} />
+            <div className='user-details-info'>
+              <h1>{login}</h1>
+              <p>{bio}</p>
+              <p>location: {location}</p>
+              <p>company: {company}</p>
+              <p>blog: {blog}</p>
+              <p>email: {email}</p>
+              <p>Joined: {new Date(created_at).toLocaleDateString('en-US')}</p>
+            </div>
+         
+            <div className='user-details-stats'>
+              <div className='user-details-stats-item'>
+                <p >
+                  Followers: {followers}
+                </p>
+              </div>
+              <div className='user-details-stats-item'>
+                <p>
+                  Following: {following}
+                </p>
+              </div>
+              <div className='user-details-stats-item'>
+                <p>
+                  Public Repos: {public_repos}
+                </p>
+              </div>
+              <div className='user-details-stats-item'>
+                <p>Public Gists: {public_gists}</p>
+              </div>
+            </div>
+          </div>
+          <div className='link-container'>
+            <Link to='/search' className='link'>
+              Back to Search
+            </Link>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
+
 
 export default UserDetails;

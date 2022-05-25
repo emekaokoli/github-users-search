@@ -2,6 +2,7 @@ import '../styles/searchUsers.styles.css';
 import ListUsers from './ListUsers';
 
 const SearchUsers = ({
+  page,
   input,
   users,
   count,
@@ -42,6 +43,7 @@ const SearchUsers = ({
           <p className='d-flex justifyContent-center'>Loading...</p>
         ) : (
           <ListUsers
+            page={page}
             users={users}
             loading={loading}
             handleFirst={handleFirst}

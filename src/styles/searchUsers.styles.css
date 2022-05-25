@@ -41,8 +41,7 @@ button{
     justify-content: center;
     align-items: center;
     text-align: center;
-    max-width: 500px;
-    min-width: 50%;
+    min-width: 50% !important;
     height: 100%;
     margin: 0 auto;
 }
