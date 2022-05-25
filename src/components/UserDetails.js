@@ -27,7 +27,6 @@ const UserDetails = () => {
   const {
     id,
     avatar_url,
-    login,
     bio,
     location,
     company,
@@ -61,9 +60,9 @@ const UserDetails = () => {
       ) : (
         <>
           <div className='user-details'>
-            <img src={avatar_url} alt={login} />
+            <img src={avatar_url} alt={name} />
             <div className='user-details-info'>
-              <h1>{login}</h1>
+              <h1>{name}</h1>
               <p>{bio}</p>
               <p>location: {location}</p>
               <p>company: {company}</p>

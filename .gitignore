@@ -7,8 +7,7 @@
 
 # testing
 /coverage
-.env
-.env-local
+
 # production
 /build
 
@@ -24,4 +23,3 @@ yarn-debug.log*
 yarn-error.log*
 .env
 .env.local
-.env
