@@ -1,8 +1,8 @@
 # Github user search app
 
-A simple app that lets you search through guthub's users and get more details about the user.
+A simple app that lets you search through guthub's users and get a detailed information about each user.
 
-# Project directory
+## Project directory
 
 ```bash
 src
@@ -35,7 +35,7 @@ src
  ┗ setupTests.js
 ```
 
-# Design
+## Design
 
 Notice how the app uses best practice by leveraging the power of react's modularity by breaking the it into smaller components and reusable components, this makes maintaining the app very easy.
 
@@ -53,7 +53,7 @@ Lastly i leveraged the `react-router-dom`'s `useParams` hook to get the current 
 - use of `useNavigate` hook to programatically change the url location to render different components based on the url.
 - use of `useState hook` to store the search result(s) and pagination implementation.
 
-# Setup
+## Setup
 
 In the project directory, you can run:
 
@@ -62,13 +62,13 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-# Test
+## Test
 
 To perform jest tests, run locally using yarn test.:
 
 ### `yarn test`
 
-# Posible improvement consideration
+## Posible improvement consideration
 
 Ofccourse, there's many room for improvement like user experience, design and architechture etc.
 
@@ -76,7 +76,7 @@ For example, the app can benefit from a better user experience, `by not using th
 
 Another consideration, is by replacing prop drilling pattern used in the app by using state management like `redux/toolkit`.
 
-# Technologies used
+## Technologies used
 
 - React
 - React-router-dom
@@ -84,25 +84,25 @@ Another consideration, is by replacing prop drilling pattern used in the app by 
 - in-built browser fetch
 - Javascript
 
-# Demo
+## Demo
 
 https://main--eloquent-rolypoly-0b8007.netlify.app/
 
-# please note:
+## please note:
 
 that this project requires environment variable containing the access_token to run.
 
-# License
+## License
 
     MIT License
 
-# Contributing
+## Contributing
 
     Feel free to fork this project and make sure to include your changes.
     If you have any questions or comments, please file an issue or open a pull request.
     Contributors are welcome.
 
-# Developer
+### Developer
 
-    [@emyokoli](https://wwww.twitter.com/emyokoli)
-    [@emyokoli](https://wwww.github.com/emekaokoli)
+[Twitter](https://wwww.twitter.com/emyokoli)
+[GitHub](https://wwww.github.com/emekaokoli)
