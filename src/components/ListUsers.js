@@ -1,6 +1,8 @@
+import propTypes from 'prop-types';
+import { ListGroup, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../styles/list.user.styles.css';
-import { ListGroup, Pagination } from 'react-bootstrap';
+
 
 const ListUsers = ({
   users,
@@ -10,32 +12,25 @@ const ListUsers = ({
   handleNext,
   handleLast,
   page,
+  count
 }) => {
-  const count = users.length;
 
   if (loading) return <div className='loading'>loading...</div>;
   return (
     <div className='container'>
       <div className='user-list'>
-        {count > 0 && <h2>found {count} users</h2>}
+        {<h5 className='results'> {count} {' '}results</h5>}
         <ListGroup className='list-container'>
-          {users < 1 && count === 0 ? (
-            <div className='no-users'>
-              <h1>No users found</h1>
-            </div>
-          ) : (
-            users?.map((user) => (
-              <ListGroup.Item key={user.id}>
-                <Link to={`/users/${user.login}`} className='link'>
-                  <div className='user-info'>
-                    <img src={user.avatar_url} alt={user.login} />
-                    <span>{user.login}</span>
-                    {/* <span>{user.starred_url}</span> */}
-                  </div>
-                </Link>
-              </ListGroup.Item>
-            ))
-          )}
+          {users?.map(({ id, login, avatar_url }) => (
+            <ListGroup.Item key={id}>
+              <Link to={`/users/${login}`} className='link'>
+                <div className='user-info'>
+                  <img src={avatar_url} alt={login} />
+                  <span>{login}</span>
+                </div>
+              </Link>
+            </ListGroup.Item>
+          ))}
         </ListGroup>
         <div className='pagination'>
           {count > 0 && (
@@ -54,3 +49,20 @@ const ListUsers = ({
 };
 
 export default ListUsers;
+
+ListUsers.propTypes = {
+  users: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.number,
+      login: propTypes.string,
+      avatar_url: propTypes.string
+    })
+  ),
+  loading: propTypes.bool,
+  handleFirst: propTypes.func,
+  handlePrev: propTypes.func,
+  handleNext: propTypes.func,
+  handleLast: propTypes.func,
+  page: propTypes.number,
+  count: propTypes.number
+};

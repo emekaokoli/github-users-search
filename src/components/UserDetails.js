@@ -1,3 +1,4 @@
+import propTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../styles/user.details.styles.css';
@@ -40,8 +41,6 @@ const UserDetails = () => {
     name,
   } = userDetails;
 
-  console.log(userDetails);
-
   if (loading) {
     return <div className='loading'>loading...</div>;
   }
@@ -49,59 +48,61 @@ const UserDetails = () => {
     return <div className='error'>{error}</div>;
   }
   return (
-    <div className='user-details-container' key={id}>
-      {userDetails.message === 'Not Found' ? (
-        <div className='link-container'>
-          <h1>User not found {error}</h1>
-          <Link to='/' className='link'>
-            Go back to home
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className='user-details'>
+    <>
+      <div className='user-details-container' key={id}>
+        <div className='user-details'>
+          <div className='user-details-info'>
             <img src={avatar_url} alt={name} />
-            <div className='user-details-info'>
-              <h1>{name}</h1>
-              <p>{bio}</p>
-              <p>location: {location}</p>
-              <p>company: {company}</p>
-              <p>blog: {blog}</p>
-              <p>email: {email}</p>
-              <p>Joined: {new Date(created_at).toLocaleDateString('en-US')}</p>
+            <h1>{name}</h1>
+            <p>{bio}</p>
+            <p>location: {location}</p>
+            <p>company: {company}</p>
+            <p>blog: {blog}</p>
+            <p>email: {email}</p>
+            <p>
+              Joined:{' '}
+              {new Date(created_at).toLocaleDateString('en-US')}
+            </p>
+          </div>
+          <div className='user-details-stats'>
+            <div className='user-details-stats-item'>
+              <p>Followers: {followers}</p>
             </div>
-         
-            <div className='user-details-stats'>
-              <div className='user-details-stats-item'>
-                <p >
-                  Followers: {followers}
-                </p>
-              </div>
-              <div className='user-details-stats-item'>
-                <p>
-                  Following: {following}
-                </p>
-              </div>
-              <div className='user-details-stats-item'>
-                <p>
-                  Public Repos: {public_repos}
-                </p>
-              </div>
-              <div className='user-details-stats-item'>
-                <p>Public Gists: {public_gists}</p>
-              </div>
+            <div className='user-details-stats-item'>
+              <p>Following: {following}</p>
+            </div>
+            <div className='user-details-stats-item'>
+              <p>Public Repos: {public_repos}</p>
+            </div>
+            <div className='user-details-stats-item'>
+              <p>Public Gists: {public_gists}</p>
             </div>
           </div>
-          <div className='link-container'>
-            <Link to='/search' className='link'>
-              Back to Search
-            </Link>
-          </div>
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+      <div className='link-container'>
+        <Link to='/search' className='link'>
+          Back to Search
+        </Link>
+      </div>
+    </>
   );
 };
 
-
 export default UserDetails;
+
+UserDetails.propTypes = {
+  id: propTypes.number,
+  avatar_url: propTypes.string,
+  bio: propTypes.string,
+  location: propTypes.string,
+  company: propTypes.string,
+  blog: propTypes.string,
+  followers: propTypes.number,
+  following: propTypes.number,
+  public_gists: propTypes.number,
+  public_repos: propTypes.number,
+  email: propTypes.string,
+  created_at: propTypes.string,
+  name: propTypes.string,
+};

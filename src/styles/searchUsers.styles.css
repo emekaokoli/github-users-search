@@ -1,15 +1,15 @@
-section{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
 
 }
-.search-input-wrapper{
+.search-input-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@ section{
     padding: 10px;
     margin-bottom: 10px;
 }
-.input-bar{
+.input-bar {
     width: 40vw;
     height: 30px;
     border-radius: 5px;
@@ -27,15 +27,30 @@ section{
     padding: 0 10px;
     margin-bottom: 10px;
 }
-button{
-    width: 10vw;
+.input-bar::spelling-error {
+    outline: tomato;
+}
+
+button {
+    width: 13%;
     height: 30px;
     border-radius: 5px;
     border: 1px solid #ccc;
     padding: 0 10px;
     margin-bottom: 10px;
+    text-align: center;
 }
-.list-users{
+button:hover {
+    background-color: tomato;
+    color: white;
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: black;
+}
+
+.list-users {
     display: flex;
     flex-direction: column;
     justify-content: center;

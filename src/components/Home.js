@@ -1,5 +1,7 @@
+import propTypes from 'prop-types';
 import Header from './navs/Header';
 import SearchUsers from './SearchUsers';
+
 
 
 const Home = ({
@@ -31,3 +33,20 @@ const Home = ({
 }
 
 export default Home
+
+Home.prototype = {
+  query: propTypes.string,
+  users: propTypes.arrayOf(
+    propTypes.shape({
+      avatar_url: propTypes.string,
+      login: propTypes.string,
+      id: propTypes.number.isRequired,
+    })
+  ).isRequired,
+  count: propTypes.number,
+  disabled: propTypes.bool,
+  loading: propTypes.bool,
+  error: propTypes.string,
+  handleSearch: propTypes.func,
+  handleChange: propTypes.func,
+};

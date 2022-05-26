@@ -1,5 +1,7 @@
+import propTypes from 'prop-types';
 import '../styles/searchUsers.styles.css';
 import ListUsers from './ListUsers';
+
 
 const SearchUsers = ({
   page,
@@ -24,13 +26,16 @@ const SearchUsers = ({
     <section>
       <div className='search-input-wrapper'>
         <input
+          aria-roledescription='search input'
           type='text'
-          placeholder='Enter username'
+          placeholder='search users'
           value={input}
           onChange={(e) => handleChange(e)}
           className='input-bar'
         />
         <button
+          name='search'
+          aria-pressed='false'
           type='submit'
           onClick={(event) => handleSearch(event)}
           disabled={disabled}
@@ -43,6 +48,7 @@ const SearchUsers = ({
           <p className='d-flex justifyContent-center'>Loading...</p>
         ) : (
           <ListUsers
+            count={count}
             page={page}
             users={users}
             loading={loading}
@@ -69,3 +75,25 @@ const SearchUsers = ({
 };
 
 export default SearchUsers;
+
+SearchUsers.propTypes = {
+  page: propTypes.number,
+  input: propTypes.string,
+  users: propTypes.arrayOf(
+    propTypes.shape({
+      avatar_url: propTypes.string,
+      login: propTypes.string,
+      id: propTypes.number.isRequired,
+    }),
+  ).isRequired,
+  count: propTypes.number,
+  disabled: propTypes.bool,
+  loading: propTypes.bool,
+  error: propTypes.string,
+  handleSearch: propTypes.func,
+  handleChange: propTypes.func,
+  handleFirst: propTypes.func,
+  handlePrev: propTypes.func,
+  handleNext: propTypes.func,
+  handleLast: propTypes.func,
+};

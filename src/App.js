@@ -1,99 +1,73 @@
 import { useCallback, useState } from 'react';
-import {
-  Route,
-  Routes, useNavigate
-} from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
 import SearchUsers from './components/SearchUsers';
 import UserDetails from './components/UserDetails';
-import { parseLinkHeader, searchUsers } from './utils/SearchAPI.util';
+import { searchUsers } from './utils/SearchAPI.util';
 
 function App() {
-  
   const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [headers, setHeaders] = useState('');
-  const [nextpage, setNextpage] = useState('');
-  const [prevpage, setPrevpage] = useState('');
-  const [lastpage, setLastpage] = useState('');
-  const [firstpage, setFirstpage] = useState('');
-
-  // pagination
+  const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [per_page] = useState(30);
+  const [per_page] = useState(18);
 
-  // const isFirstPage = page === 1;
-  // const isLastPage = page === Math.ceil(users.length / per_page);
-
-  // const indexOfLastUser = page * per_page;
-  // const indexOfFirstUser = indexOfLastUser - per_page;
-  // const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
-  
+  const isFirstPage = page === 1;
+  const isLastPage = page === Math.ceil(total / per_page);
   const disabled = input.length === 0;
 
-  const getUsers = useCallback(
-    async (input, page, per_page) => {
-      try {
-        setLoading(true);
-        const data = await searchUsers(input, page, per_page);
-        const header = await data.headers.get('Link');
-        const { items } = await data.json();
-        setHeaders(header);
-        const { first, prev, next, last } = parseLinkHeader(headers);
-        setNextpage(next);
-        setPrevpage(prev);
-        setLastpage(last);
-        setFirstpage(first);
-
-        setUsers(items);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-      }
-    },
-    [headers]
-  );
-
-  const handleNext = () => {
-    if (!nextpage) throw new Error('No next page');
-    const questionMark = nextpage.split('?')[1];
-    const and = questionMark.split('&');
-    const query = and[0].split('=')[1];
-    const currentPage = and[3].split('=')[1];
-    const perpage = and[4].split('=')[1];
-    console.log(query, currentPage, perpage);
-    setPage(currentPage);
-    getUsers(query, currentPage, perpage);
-  }
-
-  const handlePrev = () => {
-    if (!prevpage) throw new Error('No previous page');
-    setPage(page - 1);
-  }
+  const getUsers = useCallback(async (input, page, per_page) => {
+    try {
+      setLoading(true);
+      const data = await searchUsers(input, page, per_page);
+      const { items, total_count } = await data.json();
+      setUsers(items);
+      setTotal(total_count);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+    }
+  }, []);
 
   const handleFirst = () => {
-    if (!firstpage) throw new Error('No first page');
-    setPage(1);
-  }
+    if (!isFirstPage) {
+      setPage(1);
+      getUsers(input, 1, per_page);
+    }
+  };
+
+  const handlePrev = () => {
+    if (!isFirstPage) {
+      setPage(page - 1);
+      getUsers(input, page - 1, per_page);
+    }
+  };
+
+  const handleNext = () => {
+    if (isLastPage) return;
+    setPage(page + 1);
+    getUsers(input, page + 1, per_page);
+  };
 
   const handleLast = () => {
-    if (!lastpage) throw new Error('No last page');
-    setPage(Math.ceil(users.length / per_page));
-  }
-
-
-  const handleChange = (e) => setInput(e.target.value);
+    if (!isLastPage) {
+      setPage(Math.ceil(total / per_page));
+      getUsers(input, Math.ceil(total / per_page), per_page);
+    }
+  };
 
   const handleSearch = (e) => {
+    setPage(1);
     getUsers(input, page, per_page);
     navigate(`/search`);
   };
+
+  const handleChange = (e) => setInput(e.target.value);
 
   return (
     <main>
@@ -102,6 +76,7 @@ function App() {
           path='/'
           element={
             <Home
+              count={total}
               page={page}
               input={input}
               users={users}
@@ -122,7 +97,7 @@ function App() {
               users={users}
               disabled={disabled}
               loading={loading}
-              count={users.length}
+              count={total}
               error={error}
               handleSearch={handleSearch}
               handleChange={handleChange}
